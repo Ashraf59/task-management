@@ -1,4 +1,5 @@
 
+import { GoogleAuthProvider } from '@firebase/auth';
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,8 +7,9 @@ import { AuthContext } from '../context/AuthProvider';
 
 const SignUp = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
-    const {createUser} = useContext(AuthContext);
+    const {createUser, providerLogin} = useContext(AuthContext);
     const navigate = useNavigate();
+    const googleProvider = new GoogleAuthProvider();
 
     const handleSignUp = (data) => {
         console.log(data);
@@ -16,6 +18,15 @@ const SignUp = () => {
             const user = result.user;
             console.log(user)
             navigate('/')
+        })
+        .catch(error => console.log(error));
+    }
+
+    const handleGoogleSignIn = () =>{
+        providerLogin(googleProvider)
+        .then(result =>{
+            const user = result.user;
+            console.log(user);
         })
         .catch(error => console.log(error));
     }
@@ -52,7 +63,7 @@ const SignUp = () => {
 </form>
 
 
-<button type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 mt-2 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-full font-semibold">CONTINUE WITH GOOGLE</button>
+<button onClick={handleGoogleSignIn} type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 mt-2 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-full font-semibold">CONTINUE WITH GOOGLE</button>
 <p>Already have an account? <Link className='text-black' to='/login'>Please login</Link></p>
     </div>
 </div>

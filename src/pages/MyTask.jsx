@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import React from 'react'
 import Loading from '../Shared/Loading';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import '../Style/mytask.css';
+import { Link } from 'react-router-dom';
 
 const MyTask = () => {
+   
 
   const {data: mytask, isLoading, refetch} = useQuery({
     queryKey:['mytask'],
@@ -19,6 +21,7 @@ const MyTask = () => {
       }
     }
   });
+
 
   const handleDeleteTask = task => {
     const agree = window.confirm(`Are you sure, want to delete?${task.message}`)
@@ -68,15 +71,15 @@ const MyTask = () => {
         </thead>
         <tbody>
             {
-              mytask.map(task => 
+              mytask?.map(task => 
                 <tr key={task._id} class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     
-<img className="p-1 w-10 h-10 rounded ring-2 ring-gray-300 dark:ring-gray-500" src={task.image} alt="Bordered avatar"/>
+<img className="p-1 w-10 h-10 rounded ring-2 ring-gray-300 dark:ring-gray-500" src={task?.image} alt="Bordered avatar"/>
 
                 </th>
                 <td class="py-4 px-6">
-                    {task.message}
+                    {task?.message}
                 </td>
                 <td class="py-4 px-6">
                     <span className='text-2xl'>
@@ -90,7 +93,9 @@ const MyTask = () => {
                 </td>
                 <td class="py-4 px-6">
                 <span className='text-2xl'>
-                   <i class="ri-checkbox-line"></i>
+                   <i class="ri-checkbox-line">
+                    <Link to='/completedtask'></Link>
+                   </i>
                    </span>
                 </td>
             </tr>
