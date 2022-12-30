@@ -5,6 +5,7 @@ import CompletedTask from "../pages/CompletedTask";
 import Home from "../pages/Home";
 import MyTask from "../pages/MyTask";
 import SignUp from "../SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'/mytask',
-                element:<MyTask></MyTask>
+                element:<PrivateRoute><MyTask></MyTask></PrivateRoute>
             },
             {
                 path:'/completedtask',
